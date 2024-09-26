@@ -1,12 +1,18 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import os
 from dotenv import load_dotenv
 
-load_dotenv()  # Load environment variables from .env
+# Load the appropriate .env file based on the environment
+ENV = os.getenv("ENV", "development")
 
-# Database URL from environment variable
+if ENV == "production":
+    load_dotenv(".env.production")
+else:
+    load_dotenv(".env")
+
+# Database URL from the environment variable
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 # SQLAlchemy database engine
